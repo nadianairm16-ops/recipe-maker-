@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { HashRouter, Link, Route, Routes, useLocation } from 'react-router-dom';
 import { communityChefs, premiumRecipes, recipeCategories, recipeTips, sampleRecipes, trendingRecipes } from './data/recipes.js';
 import { isFirebaseConfigured, loadSavedState, saveState } from './firebase.js';
+import DiscoverPage from './components/DiscoverPage.jsx';
 import DiscoverSection from './components/DiscoverSection.jsx';
 import HeroSection from './components/HeroSection.jsx';
 import PremiumRecipes from './components/PremiumRecipes.jsx';
@@ -74,6 +75,27 @@ function Home({ onSave, savedIds, darkMode }) {
               <RecipeCard key={recipe.id} recipe={recipe} onSave={onSave} saved={savedIds.includes(recipe.id)} />
             ))}
           </div>
+          <div className="rounded-[32px] border border-white/40 bg-[rgba(255,255,255,0.72)] p-6 shadow-soft backdrop-blur-xl dark:border-slate-700/50 dark:bg-slate-900/70">
+            <h3 className="text-xl font-semibold text-slate-950 dark:text-white">Trending this week</h3>
+            <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">Discover the latest dishes that everyone is saving right now.</p>
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {trendingRecipes.map((recipe) => (
+                <div key={recipe.id} className="rounded-[28px] border border-white/70 bg-white/80 p-4 shadow-soft dark:border-slate-700/60 dark:bg-slate-900/75">
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-700">Trending</span>
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-700 dark:bg-slate-800/70 dark:text-slate-200">{recipe.mealType}</span>
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold text-slate-950 dark:text-white">{recipe.title}</h3>
+                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{recipe.description}</p>
+                  <div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-600 dark:text-slate-300">
+                    <span className="rounded-full bg-slate-100 px-2 py-1">{recipe.prepTime}</span>
+                    <span className="rounded-full bg-slate-100 px-2 py-1">{recipe.difficulty}</span>
+                    <span className="rounded-full bg-slate-100 px-2 py-1">{recipe.rating} ★</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="space-y-6">
           <div className="rounded-[32px] border border-white/40 bg-white/70 p-6 shadow-soft backdrop-blur-xl dark:border-slate-700/50 dark:bg-slate-900/70">
@@ -112,7 +134,7 @@ function Discover({ onSave, savedIds }) {
   return (
     <section className="space-y-10 pb-16">
       <SectionHeader title="Discover" subtitle="Seasonal, trending and ingredient-led recipes to spark joy." />
-      <DiscoverSection recipes={trendingRecipes} onSave={onSave} savedIds={savedIds} />
+      <DiscoverPage onSave={onSave} savedIds={savedIds} />
     </section>
   );
 }
