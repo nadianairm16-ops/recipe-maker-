@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom';
+import { HashRouter, Link, Route, Routes, useLocation } from 'react-router-dom';
 import { communityChefs, premiumRecipes, recipeCategories, recipeTips, sampleRecipes, trendingRecipes } from './data/recipes.js';
-import { isFirebaseConfigured, loadSavedState, saveState } from './firebase.js';
 import { isFirebaseConfigured, loadSavedState, saveState } from './firebase.js';
 import DiscoverSection from './components/DiscoverSection.jsx';
 import HeroSection from './components/HeroSection.jsx';
@@ -184,7 +183,7 @@ function App() {
 
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AppFrame darkMode={darkMode} setDarkMode={setDarkMode}>
         <Layout darkMode={darkMode} setDarkMode={setDarkMode}>
           <Routes>
@@ -197,7 +196,7 @@ function App() {
           </Routes>
         </Layout>
       </AppFrame>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
